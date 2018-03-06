@@ -2,123 +2,150 @@
   <title>Fake News Data Visualization</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
   <script src="https://cdn.rawgit.com/emn178/Chart.PieceLabel.js/master/build/Chart.PieceLabel.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="style.css">
+  <!--<link rel="stylesheet" type="text/css" href="style.css">-->
+  <style type="text/css"></style>
 </head>
 
 <body>
-	<div style="padding: 20px">
-	<canvas id="myChart" width = "80%" height = "50%" ></canvas>
-	</div>
+  <div style="padding: 20px">
+    <h1 style="font-family: Helvetica, Arial; font-weight: 600">  Number of Occurences of the Word for all Messages </h1>
+    <hr>
+    <canvas id="myChart10" width = "68%" height = "38%" ></canvas>
+ </div>
+    <div style="padding: 20px">
+    <h1 style="font-family: Helvetica, Arial; font-weight: 600"> Percentage of Messages Containing the Word </h1>
+    <hr>
+    <div id="chartset" style="display: flex; flex-wrap: wrap">
+      <div style=" width:20%">
+        <canvas id="myChart0"></canvas>
+      </div>
+    	<div style=" width:20%">
+        <canvas id="myChart1"></canvas>
+      </div>
+      <div style=" width:20%">
+        <canvas id="myChart2"></canvas>
+      </div>
+      <div style=" width:20%">
+        <canvas id="myChart3"></canvas>
+      </div>
+      <div style=" width:20%">
+        <canvas id="myChart4"></canvas>
+      </div>
+      <div style=" width:20%">
+        <canvas id="myChart5"></canvas>
+      </div>
+      <div style=" width:20%">
+        <canvas id="myChart6"></canvas>
+      </div>
+      <div style=" width:20%">
+        <canvas id="myChart7"></canvas>
+      </div>
+      <div style=" width:20%">
+        <canvas id="myChart8"></canvas>
+      </div>
+      <div style=" width:20%">
+        <canvas id="myChart9"></canvas>
+      </div>
+    </div>
+ </div>
+
 </body>
 
 <script type="text/javascript">
 //Read from file:
-var topics = [['People'], ['Alamin'], ['Medium'], ['Share'], ['Country'], ['Illegal'], ['Jueteng'], ['Drug'], ['Pilipinas','Philippines', 'Philippine'],  ['President', 'Rodrigo','Duterte']]
+var topics = [['People'], ['Alamin'], ['Medium'], ['Share'], ['Country'], ['Illegal'], ['Jueteng'], ['Drug'], ['Pilipinas','Philippines', 'Philippine'],  ['President', 'Rodrigo','Duterte']];
+var topics2 = [['People'], ['Alamin'], ['Medium'], ['Share'], ['Country'], ['Illegal'], ['Jueteng'], ['Drug'], ['Philippines'],['Duterte']];
+var backgroundColors = ['#223D58', '#212724', '#F3B13E', '#B12418', '#6C120A', '#051519','#153946', '#33768F', '#C8C8C8', '#A62C1A'];
 
 // For drawing the lines
-var percentage = [108/2457*100, 176/2457*100, 101/2457*100, 170/2457*100, 132/2457*100, 34/2457*100, 7/2457*100, 81/2457*100, 485/2457*100, 705/2457*100]
+var percentage = [108/2457*100, 176/2457*100, 101/2457*100, 170/2457*100, 132/2457*100, 34/2457*100, 7/2457*100, 81/2457*100, 485/2457*100, 705/2457*100];
 
+Chart.pluginService.register({
+  beforeDraw: (function(chart) {
+    if (chart.config.type === 'doughnut') {
+      var width = chart.chart.width,
+      height = chart.chart.height,
+      ctx = chart.chart.ctx;
 
-var ctx = document.getElementById("myChart");
-var myChart = new Chart(ctx, {
-  	type: 'bar',
-  	data: {
-  		labels: topics,
-		datasets: [
-			{
-				yAxisID: 'A',
-				data: percentage,
-				//borderColor: "#3e95cd",
-				//fill: false
-				//backgroundColor: 
-				backgroundColor: [
-				  	'#223D58', 
-				  	'#212724', 
-				  	'#F3B13E', 
-				  	'#B12418',
-				  	'#6C120A',
-				  	'#051519',
-				  	'#153946',
-				  	'#33768F',
-				  	'#C8C8C8',
-				  	'#A62C1A'
-				]	
-			},
-			{
-				yAxisID: 'B',
-	         	data: [172, 176, 178, 181, 187, 187, 247, 291, 695, 971],
-	          	type: 'bar',
-	          	backgroundColor: [
-				  	'#223D58', 
-				  	'#212724', 
-				  	'#F3B13E', 
-				  	'#B12418',
-				  	'#6C120A',
-				  	'#051519',
-				  	'#153946',
-				  	'#33768F',
-				  	'#C8C8C8',
-				  	'#A62C1A'
-				]
-	         }
-		],
-  	},
-  	options: {
-  		legend: {
-    		display: false
- 		},
-  		pieceLabel: {
-		    render: 'label',
-		    fontColor: 'white'
-		},
-		scales: {
-	        yAxes:[{
-	        	id: 'A',
-                display: true,
-                ticks: {
-                    beginAtZero: true,
-                    max: 100,
-                    callback: function(value) {
-               			return value + "%"
-           			}
-                },
-                scaleLabel: {
-        			display: true,
-        			labelString: 'Percentage of Messages Containing the Word'
-      			}
-            },
-            {
-            	id: 'B',
-                display: true,
-                ticks: {
-                    beginAtZero: true,
-                    max: 1000
-                },
-                scaleLabel: {
-        			display: true,
-        			labelString: 'Number of Occurences of the Word for all Messages'
-      			}
-	       	}
-	     	]
-	   	},
+      ctx.restore();
+      var fontSize = (height / 150).toFixed(2);
+      ctx.font = fontSize + "em sans-serif";
+      ctx.textBaseline = "middle";
 
-	   	tooltips: {
-            mode: 'index',
-            intersect: false,
-            callbacks: {
-                label: function (t, d) {
-                    if (t.datasetIndex === 0) {
-                        return 'Percentage: ' + t.yLabel.toFixed(2) + '%';
-                    } else if (t.datasetIndex === 1) {
-                    	return 'Total Number of Occurences: ' + t.yLabel;
-                    }
-                      //  if (t.yLabel.toString().length === 9) {
-                      //      return Math.round(+t.yLabel.toString().replace(/(\d{3})(.*)/, '$1.$2')) + 'M';
-                       // } else return Math.round(+t.yLabel.toString().replace(/(\d{2})(.*)/, '$1.$2')) + 'M';
-                }
-            }
+      var percent = chart.config.data.datasets[0].data[0]
+      var label = chart.config.data.labels[0]
+      var text = percent.toFixed(2) + '%';
+      textX = Math.round((width - ctx.measureText(text).width) / 2 + 2),
+      textY = height / 2 + 15;
+
+      ctx.fillText(text, textX, textY);
+      ctx.save();
+    }
+  }).bind(this)
+});
+
+for(var i = 0; i < 10; i++){
+  var chartName = 'myChart' + i.toString();
+  var ctx = document.getElementById(chartName);
+  var chart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: topics2[i],
+      datasets: [{
+	label: 'Percentage',
+        data: [percentage[i], 100-percentage[i]],
+        backgroundColor: [backgroundColors[i]]
+      }]
+    },
+    options: {
+      responsive: true,
+      legend: {
+        display: true
+      },
+    }
+  });
+}
+
+Chart.pluginService.register({
+  beforeDraw: function(x){ return null;}
+});
+
+var ctx2 = document.getElementById("myChart10");
+var myChart = new Chart(ctx2, {
+  type: 'bar',
+  data: {
+    labels: topics,
+    datasets: [{
+        yAxisID: 'A',
+        data: [172, 176, 178, 181, 187, 187, 247, 291, 695, 971],
+        type: 'bar',
+        backgroundColor: backgroundColors
+      }],
+  },
+  options: {
+    legend: {
+      display: false
+  },
+    pieceLabel: {
+      render: 'label',
+      fontColor: 'white'
+  },
+  scales: {
+        yAxes:[{
+            id: 'A',
+              display: true,
+              ticks: {
+                  beginAtZero: true,
+                  max: 1000
+              },
+              scaleLabel: {
+            display: true,
+            labelString: 'Number of Occurences of the Word for all Messages'
+          }
         }
-  	}
+      ]
+    },
+  }
 });
 
 </script>
