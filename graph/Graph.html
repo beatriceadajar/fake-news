@@ -14,6 +14,7 @@
  </div>
     <div style="padding: 20px">
     <h1 style="font-family: Helvetica, Arial; font-weight: 600"> Percentage of Messages Containing the Word </h1>
+    <p style="font-family: Sans-serif"> Total no. of messages: 2475 </p>
     <hr>
     <div id="chartset" style="display: flex; flex-wrap: wrap">
       <div style=" width:20%">
@@ -100,8 +101,15 @@ for(var i = 0; i < 10; i++){
     options: {
       responsive: true,
       legend: {
-        display: true
+        display: true,
+        onClick: (e) => e.stopPropagation()
       },
+      tooltips: {
+        enabled: false
+      },
+      hover: {
+        mode: null
+      }
     }
   });
 }
