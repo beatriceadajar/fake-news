@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Fake News Data Visualization</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+</head>
+<body>
+	 <div style="padding: 20px">
+	   <h1 style="font-family: Helvetica, Arial; font-weight: 600">  Number of Reacts and Shares of Fake News Articles </h1>
+	   <hr>
+	   <canvas id="scatterChart" width = "68%" height = "38%" ></canvas>
+	</div>
+</body>
+<script type="text/javascript">
+	var jsonData = [];
+	var names = [];
+
+	var ctx = document.getElementById("scatterChart");
+	var scatterChart = new Chart(ctx, {
+		type: 'scatter',
+		scaleOverride: true,
+		data: {
+			labels: names,
+		    datasets: [{
+		        pointRadius: 5,
+		        pointHoverRadius: 6,
+		        pointBackgroundColor: "rgba(193,46,12,0.2)",
+		        pointBorderColor: "rgba(193,46,12,1)",
+		        data: jsonData
+		    }]
+		},
+		options: {
+			showLines: false,
+			legend: {
+			    display: false,
+			},
+			tooltips: {
+				enabled: true,
+		        callbacks: {
+		            beforeLabel: function(tooltipItem, data) {
+		            	return label = data.labels[tooltipItem.index];
+		            }
+		        }
+		    },
+		    scales: {
+		    	yAxes: [{
+		        	scaleLabel: {
+		        		display: true,
+		        		labelString: "Number of Shares"
+		        	},
+		        	ticks: {
+		        	    beginAtZero: true,
+		        	    max: 6000
+		        	}
+		        }],
+		        xAxes: [{
+		        	scaleLabel: {
+		        		display: true,
+		        		labelString: "Number of Reacts"
+		        	},
+		        	ticks: {
+		        	    beginAtZero: true,
+		        	    max: 70000
+		        	}
+		        }]
+		    }
+		}
+	});
+
+	$.getJSON('data.json', function(data) {
+		for (var i = 0; i < data.length; i++) {
+			var jsonObj = {x: data[i].total_reacts, y: data[i].shares};
+			var nameObj = [data[i].name];
+			jsonData.push(jsonObj);
+			names.push(nameObj);
+		}
+		scatterChart.update();
+	});
+	
+</script>
+</html>
