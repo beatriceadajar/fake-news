@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Fake News Data Visualization</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+</head>
+<body>
+	 <div style="padding: 20px">
+	   <h1 style="font-family: Helvetica, Arial; font-weight: 600">Fake News Articles and their Reactions and Shares</h1>
+	   <hr>
+	   <canvas id="scatterChart" width = "68%" height = "38%" ></canvas>
+	</div>
+</body>
+<script type="text/javascript">
+	var jsonData = [];
+	var names = [];
+	var pageNames = [];
+	var articles = [];
+	var bgColors = ["rgba(230,25,75,0.75)", "rgba(60,180,75,0.75)", "rgba(255,225,25,0.75)", "rgba(0,130,200,0.75)","rgba(245,130,48,0.75)", "rgba(145,30,180,0.75)", "rgba(0, 128, 128,0.75)", "rgba(240,50,230,0.75)", "rgba(210,245,60,0.75)", "rgba(128, 0, 0,0.75)", "rgba(230, 190, 255,0.8)"];
+	var borderColors = ["rgba(230,25,75,1)", "rgba(60,180,75,1)", "rgba(255,225,25,1)", "rgba(0,130,200,1)","rgba(245,130,48,1)", "rgba(145,30,180,1)", "rgba(0, 128, 128,1)", "rgba(240,50,230,1)", "rgba(210,245,60,1)", "rgba(128, 0, 0,1)", "rgba(230, 190, 255,1)"];
+
+	var datasets = [];
+
+	var ctx = document.getElementById("scatterChart");
+	var scatterChart = new Chart(ctx, {
+		type: 'scatter',
+		data: {
+			labels: names,
+		    datasets: datasets
+		},
+		options: {
+			showLines: false,
+			legend: {
+			    display: false,
+			    position: 'right'
+			},
+			tooltips: {
+				enabled: true,
+		        callbacks: {
+		        	beforeLabel: function(tooltipItem, data) {
+		            	var title = datasets[tooltipItem.datasetIndex].label;
+		            	return title;
+		            },
+		            label: function(tooltipItem, data) {
+		            	var x = datasets[tooltipItem.datasetIndex].data[tooltipItem.index].x;
+		            	var y = datasets[tooltipItem.datasetIndex].data[tooltipItem.index].y;
+		            	var page = data.labels[tooltipItem.index];
+		            	return 'reacts' + ': ' + x + ', ' + 'shares' + ': ' + y;
+		            }
+		        }
+		    },
+		    scales: {
+		    	yAxes: [{
+		        	scaleLabel: {
+		        		display: true,
+		        		labelString: "Number of Shares"
+		        	},
+		        	ticks: {
+		        	    beginAtZero: false,
+		        	    //max: 90000
+		        	}
+		        }],
+		        xAxes: [{
+		        	scaleLabel: {
+		        		display: true,
+		        		labelString: "Number of Reactions"
+		        	},
+		        	ticks: {
+		        	    beginAtZero: true
+		        	}
+		        }]
+		    }
+		}
+	});
+
+	$.getJSON('data.json', function(data) {
+		var pageNames = [];
+		var totalPageCount = [];
+		var totalReactCount = [];
+		var totalShareCount = [];
+
+		for (var i = 0; i < data.length; i++) {
+			var pageName = data[i].page_id;
+			pageNames.push(pageName);
+		}
+
+		var pageNamesUnique = Array.from(new Set(pageNames));
+
+		for (var l = 0; l < data.length; l++) {
+			var jsonObj = {x: data[l].total_reacts, y: data[l].shares};
+			var nameObj = pageNamesUnique[l];
+			var articleTitle = data[l].name;
+			jsonData.push(jsonObj);
+			names.push(nameObj);
+			articles.push(articleTitle);
+		}
+
+		for (n = 0; n < jsonData.length; n++) {
+			for (p = 0; p < data.length; p++) {
+				if (names[n] == data[p].page_id) {
+					var object = {label: articles[p], data: [jsonData[p]], backgroundColor: bgColors[n], hoverRadius: 5};
+					datasets.push(object);
+				}
+			}
+		}
+
+		console.log(names);
+		scatterChart.update();
+	});
+	
+</script>
+</html>
