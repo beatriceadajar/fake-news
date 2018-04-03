@@ -7,21 +7,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-    <select id="fake-news">
+    <h1 style="font-family: Helvetica, Arial; font-weight: 600"> Top Fake News by: </h1>
+    <select class="viz-dropdown" id="fake-news" style="height:2rem;font:1rem Helvetica,sans-serif;margin-bottom:50px;">
         <option class="viz-dropdown-option" value=0>Number of Comments</option>
         <option class="viz-dropdown-option" value=1>Number of Shares</option>
         <option class="viz-dropdown-option" value=2>Number of Reactions</option>
-    </select>
-    <canvas id="top-news" width="800" height="450"></canvas>
+    </select><br>
+    <canvas id="top-news" width="600" height="350"></canvas>
     <script src="{{ url_for('static', filename='js/Chart.min.js') }}"></script>
-    <script src="static/js/Chart.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
         var $SCRIPT_ROOT = {{ request.script_root | tojson | safe }};
         var labels = {{ labels | tojson | safe }};
         var title = {{ title | tojson | safe }};
         var data = {{ data | tojson | safe }};
+        var message = {{ message | tojson | safe }};
     </script>
-    <script src="static/js/barGraph.js"></script>
+    <script src="{{ url_for('static', filename='js/barGraph.js') }}"></script>
 </body>
 </html>
