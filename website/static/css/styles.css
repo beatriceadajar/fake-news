@@ -1,0 +1,61 @@
+body {
+	background-color: #edf0f5;
+}
+
+hr {
+	border-color: #edf0f5;
+	border-width: 0.5px;
+}
+
+.column {
+	margin-bottom: 3%;
+}
+
+.navbar {
+	padding-left: 10%;
+	padding-right: 10%;
+	padding-top: 30px;
+	background-color: #4468b0;
+	border-bottom: 2px;
+	border-bottom-color: #385997;
+}
+
+.navbar-brand {
+	color: white;
+}
+
+.navbar-brand:hover {
+	color: white;
+	text-shadow:
+    -2px -2px 0 #385997,
+    2px -2px 0 #385997,
+    -2px 2px 0 #385997,
+    2px 2px 0 #385997;
+}
+
+.columns {
+	padding-left: 10%;
+	padding-right: 10%;
+	padding-top: 5%;
+	padding-bottom: 5%;
+}
+
+.card {
+	border-radius: 5px;
+}
+
+.card-image {
+	padding: 2%;
+}
+
+.btn.btn-link.dropdown-toggle {
+	color: white;
+	border-color: #4468b0;
+	background-color: #4468b0;
+}
+
+.btn.btn-link.dropdown-toggle:hover, .btn.btn-link.dropdown-toggle:focus {
+	color: white;
+	border-color: #385997;
+	background-color: #385997;
+}
