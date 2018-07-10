@@ -59,7 +59,7 @@ var scatterChart = new Chart(ctxScatter, {
 	}
 });
 
-$.getJSON('', function(data) {
+$.getJSON(dataJson, function(data) {
 	var pageNamesScatter = [];
 	var totalPageCount = [];
 	var totalReactCount = [];

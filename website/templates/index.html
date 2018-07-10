@@ -36,12 +36,29 @@
     <div class="container">
         <div class="columns">
             <div class="column col-12">
-                <p><!-- Fake news have been an issue... It's important to be aware... --></p>
+                <h4>The Issue of Fake News</h4>
+                <p>Recently, the propagation of fake news through social media has become a rampant issue all around the world. In the Philippines,
+                it manifests itself through the spread of unverified reports through various Facebook pages and users, even from popular
+                personalities.</p>
+                <p>In this day and age, it is therefore important to be aware that they are being spread and also to know what
+                characteristics to look out for in spotting fake news articles and pages.</p>
+                <p>The scope of the dataset covers all 2017 posts from 11 Facebook pages "carrying fake or unverified contents," based on the
+                    CBCP Pastoral Guidelines on the Use of Social Media issued on January 30. The said pages are also included in the
+                    <a href="https://www.rappler.com/nation/173832-cbcp-list-websites-fake-news">CBCP’s list of fake news sites.</a>
+                </p>
+            </div>
+
+            <div class="column col-12">
+                <br><br>
             </div>
 
             <div class="column col-4">
-                <p><!-- Taking a look at the majority of these issues... the usual topics revolve around... --></p>
+                <br><br><br><br><br><br>
+                <h4>Trending Topics</h4>
+                <p>Taking a look at the majority of these issues, the most common fake news topics and commonly used words are related to politics. More specifically, the top frequently-used
+                words are related to politics and crimes.</p>
             </div>
+
             <div class="column col-8">
                 <div class="card">
                     <div class="card-header">
@@ -96,9 +113,10 @@
                 </div>
             </div>
 
-            <div class="column col-4">
-                <p><!-- The most popular articles are the clickbait ones... --></p>
+            <div class="column col-12">
+                <br><br><br>
             </div>
+
             <div class="column col-8">
                 <div class="card">
                     <div class="card-header">
@@ -110,9 +128,22 @@
                     </div>
                 </div>
             </div>
+            <div class="column col-4">
+                <br><br><br><br><br>
+                <h4>Popularity Per Post</h4>
+                <p>However, the posts with the highest reach are articles which have nothing to do with politics. In fact, they are not actually
+                classified as "fake news" but more appropriately "clickbait."</p>
+            </div>
+
+            <div class="column col-12">
+                <br><br><br>
+            </div>
 
             <div class="column col-4">
-                <p></p>
+                <br><br><br><br><br><br>
+                <h4>What is Clickbait?</h4>
+                <p>Clickbait is defined by Merriam-Webster as "something (such as a headline) designed to make readers want to click on a hyperlink especially
+                when the link leads to content of dubious value or interest."</p>
             </div>
             <div class="column col-8">
                 <div class="card">
@@ -126,18 +157,19 @@
                 </div>
             </div>
 
-            <div class="column col-4">
-                <p></p>
+            <div class="column col-12">
+                <br><br><br>
             </div>
+
             <div class="column col-8">
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title h5">Top Fake News by
                             <select class="viz-dropdown" id="fake-news">
-                                    <option class="viz-dropdown-option" value=0>Number of Comments</option>
+                                <option class="viz-dropdown-option" value=0>Number of Comments</option>
                                     <option class="viz-dropdown-option" value=1>Number of Shares</option>
                                     <option class="viz-dropdown-option" value=2>Number of Reactions</option>
-                            </select><br>
+                                </select><br>
                         </div>
                         <hr noshade>
                     </div>
@@ -146,7 +178,15 @@
                     </div>
                 </div>
             </div>
-
+            <div class="column col-4">
+                <br><br><br>
+                <h4>Fake News vs. Clickbait</h4>
+                <p>The topics that have the most number of shares and reactions are clickbait. Meanwhile, the topics that have the most number
+                of comments are related to politics.</p>
+                <p>The common trend of pages is there is a majority of posts with steady low reach points and very few yet dominant spikes of
+                high reach points. The ones with higher reach points are the clickbait articles.</p>
+            </div>
+            
             <div class="column col-12">
                 <div class="card" height="75%">
                     <div class="card-header">
@@ -158,6 +198,21 @@
                     </div>
                 </div>
             </div>
+
+            <div class="column col-12">
+                <br><br><br>
+                <h4>What Does It All Mean?</h4>
+                <p>These pages could be a strategy of propaganda. Clickbait headlines are used to gain reach and followers, which gives pages
+                an avenue to flood posts on political agenda. This possibility is supported by the fact that there is higher interaction
+                with articles that are considered clickbait, but more articles about politics.</p>
+                <p>Although clickbait articles garner more attention through reactions and shares, the political posts generate more discussion
+                as there are more comments. This means that although the reach may not be as high in terms of number of reactions and shares,
+                more people are vocal about their thoughts regarding political issues.</p>
+                <p>Disclaimer: This study is limited by available data and criteria for selecting fake news pages. To know more about the methodology
+                    and data used, you may check our
+                    <a href="https://github.com/beatriceadajar/fake-news/blob/master/Documentation.ipynb">documentation file</a>.
+                </p>
+            </div>
         </div>
     </div>
 
@@ -165,6 +220,7 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
         var $SCRIPT_ROOT = {{ request.script_root | tojson | safe }};
+        var dataJson = "{{ url_for('static', filename='data.json') }}";
         var labels = {{ labels | tojson | safe }};
         var title = {{ title | tojson | safe }};
         var data = {{ data | tojson | safe }};

@@ -7,7 +7,7 @@ var borderColors = ["rgba(230,25,75,1)", "rgba(60,180,75,1)", "rgba(255,225,25,1
 
 var datasets = [];
 
-$.getJSON('', function(data) {
+$.getJSON(dataJson, function(data) {
 	var pageNames = [];
 	var totalPageCount = [];
 	var totalReactCount = [];
@@ -58,7 +58,8 @@ var bubbleOptions = {
 	showLines: false,
 	legend: {
 	    display: true,
-	    position: 'right'
+		position: 'right',
+		boxWidth: 10
 	},
 	tooltips: {
 		enabled: true,
